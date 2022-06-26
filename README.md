@@ -4,9 +4,10 @@
 
 One of the most difficult aspects of application development is authentication and database storage. In this project app, I'll introduce [Google Firebase](https://firebase.google.com/), one of the most popular authentication services out there, and [Google Cloud Firestore](https://firebase.google.com/docs/firestore/quickstart), one of the most inventive NoSQL database options available. Leveraging [NextAuth](https://next-auth.js.org/) and Firebase, we will develop the login authentication application with [JWT sessions](https://next-auth.js.org/configuration/options#session) and [Next.js 12 middleware](https://nextjs.org/docs/advanced-features/middleware) to prevent unauthorized access to private pages. Additionally, we will use Cloud Firestore features to offer database access and data manipulation.
 
+
 ## Starter project
 
-This project app is based on the starter [MUI 5 + Next.js + TypeScript example](https://github.com/mui/material-ui/tree/master/examples/nextjs-with-typescript).
+This project app is based on the starter [Next.js + MUI 5 Light/Dark Mode Theme + TypeScript example](https://github.com/tamvo22/mui-v5-theme).
 
 
 ## Objective
@@ -54,7 +55,7 @@ if (isTypeOf<UserCredential>(auth, 'user')) {
 
 ### Setup environment variables and typescript types
 
-Authenticating applications has never been easy. Fortunately, with the help of the NextAuth library, the authentication process is much easier. For the project app to work correctly, we'll need to set up and configure [NextAuth environment variables](https://next-auth.js.org/configuration/options), Auth0 provider API keys, and Firebase/Firebase Admin Service Accounts. For local development, we'll set the values to http://localhost:3000. 
+Authenticating applications has never been easy. Fortunately, with the help of the NextAuth library, the authentication process is much easier. For the project app to work correctly, we'll need to set up and configure [NextAuth environment variables](https://next-auth.js.org/configuration/options), Auth0 provider API keys, and Firebase/Firebase Admin Service Accounts. For local development, we'll set the values to `http://localhost:3000`. 
 
 - NEXTAUTH_URL: `http://localhost:3000` or provide domain url.
 
