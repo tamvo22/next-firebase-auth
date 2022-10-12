@@ -4,6 +4,8 @@
 
 Authentication and data storage updates are two of the most challenging aspects of program development. For our project app, we'll create an admin dashboard Todo app using [Firestore](https://firebase.google.com/docs/firestore/quickstart) cloud database and to prevent unauthorized access to the admin dashboard, we will be utilizing [NextAuth](https://next-auth.js.org/), [Next.js 12 middleware](https://nextjs.org/docs/advanced-features/middleware) and [Firebase](https://firebase.google.com/) authentication services. The user can login to our dashboard and perform real-time database operations with our Todo app. To see what we'll be creating, check out the app for the completed [project app](https://next-firebase-auth-kappa.vercel.app/).
 
+[https://next-firebase-auth-kappa.vercel.app/](https://next-firebase-auth-kappa.vercel.app/)
+
 ![Admin Dashboard Todo](public/todos.jpg)
 
 ## Starter project
