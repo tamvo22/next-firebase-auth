@@ -243,17 +243,15 @@ export default NextAuth({
   },
   callbacks: {
     async jwt({ token, user }) {
-      // merge token with user information if user exists
       if (user) {
-        token.user = user;
+      // we will be adding firestore custom accessToken later on
+        token.user = { ...user };
       }
 
       return token;
     },
     async session({ session, token }) {
-      // update session information
-      // we will be adding firestore custom accessToken later on
-      session.user = { ...session.user, ...token.user };
+      session = { ...session, ...token };
 
       return session;
     },
@@ -641,16 +639,16 @@ Our Todo app will access our Firestore database directly to perform database upd
 callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.user = user;
+        const uid = user.id || token.sub;
+        // create firestore accessToken
+        const accessToken = await adminAuth.createCustomToken(uid);
+        token.user = { ...user, accessToken };
       }
 
       return token;
     },
     async session({ session, token }) {
-      const uid = token.user.id || token.sub;
-      // create firestore accessToken
-      const accessToken = await adminAuth.createCustomToken(uid);
-      session.user = { ...session.user, ...token.user, accessToken };
+      session = { ...session, ...token };
 
       return session;
     },
