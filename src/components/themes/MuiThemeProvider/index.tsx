@@ -22,7 +22,7 @@ export default function MuiThemeProvider({ Component, children }: DarkThemeProvi
   const getLayout = Component.getLayout ?? ((page) => <Layout>{page}</Layout>);
 
   // Prevent FOUC flash before page renders
-  if (!isMounted || !mode) {
+  if (!isMounted() || !mode) {
     return <div style={{ visibility: 'hidden' }}></div>;
   }
 

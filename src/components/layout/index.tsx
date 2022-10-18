@@ -76,6 +76,8 @@ export default function Layout({ children }: Layout) {
   // check for session
   const session = useSession();
 
+  console.log('session', session);
+
   if (session.status === 'loading') return null;
 
   return (
