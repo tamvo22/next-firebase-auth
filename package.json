@@ -1,5 +1,5 @@
 {
-  "name": "nextjs-nextAuth-firebase-firestore",
+  "name": "nextjs-nextauth-firebase-firestore",
   "version": "5.0.0",
   "private": false,
   "description": "Next.js & NextAuth Authentication & Firebase & Firestore",
