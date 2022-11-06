@@ -1,7 +1,7 @@
 {
   "name": "nextjs-nextauth-firebase-firestore",
-  "version": "5.0.0",
-  "private": false,
+  "version": "1.0.0",
+  "private": true,
   "description": "Next.js & NextAuth Authentication & Firebase & Firestore",
   "repository": {
     "type": "git",
