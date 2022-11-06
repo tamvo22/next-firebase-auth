@@ -1,4 +1,4 @@
-# Next.js + NextAuth Authentication + Firebase + Firestore
+# NextAuth & Firebase/Firestore
 
 ## The idea behind the example
 
@@ -10,7 +10,7 @@ Authentication and data storage updates are two of the most challenging aspects 
 
 ## Starter project
 
-This project app is based on the starter [Next.js + MUI 5 Light/Dark Mode Theme + TypeScript example](https://github.com/tamvo22/mui-v5-theme).
+This project app is based on the starter [Next.js & MUI 5 Light/Dark Mode Theme & TypeScript example](https://github.com/tamvo22/mui-v5-theme).
 
 ## Objective
 
@@ -38,13 +38,13 @@ This project's objective consists of two main components: 1) authentication serv
 
 One of the challenges in using Typescript is learning how to differentiate custom types. We can filter the variables based on the types that are known by using the helper script [isTypeof](https://stackoverflow.com/questions/51528780/typescript-check-typeof-against-custom-type).
 
-[src/\_utils/helper/typeGuard.ts](src/_utils/helper/typeGuard.ts)
+[typeGuard.ts](src/_utils/helper/typeGuard.ts)
 
 ```jsx
 export const isTypeOf = <T>(varToBeChecked: any, propertyToCheckFor: keyof T): varToBeChecked is T => (varToBeChecked as T)[propertyToCheckFor] !== undefined;
 ```
 
-[pages/login/index.tsx](pages/login/index.tsx)
+[login.tsx](pages/login/index.tsx)
 
 ```jsx
 //pages/login/index.tsx
@@ -122,7 +122,7 @@ _The environment variables listed below will be configured as public variables t
 
 The two components that make up our [Login page](pages/login/index.tsx) are the **Provider** component, which has the callback function *handleSignInProvider* to authenticate with Google and GitHub Auth0 media provider and the **CredentialForm** component, which is a custom credential login form with form submit function *handleOnSubmit* to authenticate with Firebase Auth. In getServerSideProps, we will perform a check to redirect the user to the Dashboard if a session already exists. Otherwise, we will generate a CSRF token for our custom credential login form for validation. Most of the code will be for the custom credential form. After integrating Firebase into later in our app, we will revisit the **handleOnSubmit** function to continue with Firebase credential login process.
 
-[Login component](pages/login/index.tsx)
+[login.tsx](pages/login/index.tsx)
 
 ```jsx
 // pages/login/index.tsx
@@ -185,7 +185,7 @@ We will initialize and configure the NextAuth API route handler [`[...nextauth.j
 
 - **callbacks**: provide extra control during the authentication phrase. We can configure any parameters we need to pass along with our JWT token, such as user role, custom claims, rotating accessToken and refreshToken in the Session callback.
 
-[`[...nextauth.js]`](pages/api/auth/%5B...nextauth%5D.ts)
+[`[...nextauth].js`](pages/api/auth/%5B...nextauth%5D.ts)
 
 ```jsx
 // pages/api/auth/[...nextauth].js
@@ -282,7 +282,7 @@ We will create the [**useAuth**](src/_utils/firebase-v9/firebase/useAuth.ts) fil
 
 In addition, since NextAuth will be handling the session management, it is important that we disable [Firebase Auth's persistent state management](https://firebase.google.com/docs/auth/web/auth-state-persistence) and let NextAuth handle the session state management instead.
 
-[useAuth](src/_utils/firebase-v9/firebase/useAuth.ts)
+[useAuth.ts](src/_utils/firebase-v9/firebase/useAuth.ts)
 
 ```jsx
 // src/_utils/firebase-v9/firebase/useAuth.ts
@@ -325,7 +325,7 @@ We will revisit the [Login page's **handleOnSubmit** function](pages/login/index
 
 For the Firebase authentication with email and password credential sign-in, the user must have a Firebase Auth account. We'll be adding the admin account manually for the purpose of this project app. To create separate users who will use the credential signin method, you would need to create a signup page or an internal user creation page. 
 
-[Login page](pages/login/index.tsx)
+[login.tsx](pages/login/index.tsx)
 
 ```jsx
 // pages/login/index.tsx
@@ -480,7 +480,7 @@ export const deleteAccountByUserId = async (userId: string) => {
 
 In addition, we will be using the [Google Firestore Data Converter withConvert API](https://firebase.google.com/docs/reference/js/v8/firebase.firestore.FirestoreDataConverter) to specify our data types for our data storage.
 
-[Firestore Admin withConvert](src/_utils/firebase-v9/firebase-admin/firestore/collections.ts)
+[collections.ts](src/_utils/firebase-v9/firebase-admin/firestore/collections.ts)
 
 ```jsx
 const COLLECTIONS = {
@@ -508,7 +508,7 @@ export const VerificationTokens = firestoreAdmin.collection(COLLECTIONS.verifica
 
 After implementing our Firestore Admin functions, we will create our own custom [NextAuth Firestore adapter](src/_utils/auth/next-auth/FirestoreAdapter.ts). The adapter will allow us to save provider authenticated user information such as users and accounts to our Firestore database. NextAuth provides us with the [custom adapter methods](https://next-auth.js.org/tutorials/creating-a-database-adapter) so that we may add calls to our Firestore useUsers and useAccounts module to carry out the required operations. Since we are using JWT session and don't need to record the session information, we can return null for the adapter session and email validation methods. As a note, the NextAuth adapter only 
 
-[firestoreAdapter](src/_utils/auth/firestoreAdapter.ts)
+[firestoreAdapter.ts](src/_utils/auth/firestoreAdapter.ts)
 
 ```jsx
 //src/_utils/auth/firestoreAdapter.ts
@@ -560,7 +560,7 @@ export function FirestoreAdapter(): Adapter {
 
 Let's revisit the nextauth api route **CredentialsProvider** authorize function and add the finishing touches to complete our NextAuth api route handler. We'll use the verifyIdToken api function to validate the Firebase client userIdToken before passing it to NextAuth to create the session. We can fetch our user's profile from our database, such as the Name and Role fields, to add to our user token.
 
-[`[...nextauth.js]`](pages/api/auth/%5B...nextauth%5D.ts)
+[`[...nextauth].ts`](pages/api/auth/%5B...nextauth%5D.ts)
 
 ```jsx
 // pages/api/auth/[...nextauth].ts
@@ -632,7 +632,7 @@ export const config = {
 
 Our Todo app will access our Firestore database directly to perform database updates. This process is much faster than performing server updates with firebase-admin/firestore. However, we would need to authorize the authenticated user with a custom accessToken with firebase/firestore. We can do that using firebase-admin/auth's createCustomToken() api method to generate our accessToken and pass it along with our user session.
 
-[`[...nextauth.js]`](pages/api/auth/%5B...nextauth%5D.ts)
+[`[...nextauth].ts`](pages/api/auth/%5B...nextauth%5D.ts)
 
 ```jsx
 // pages/api/auth/[...nextauth].ts
@@ -659,7 +659,7 @@ Instead of having our Todos app accessing our server api to communicate with our
 
 Our app's layout component will be the best place to check for user sessions, and if the user is authenticated, the admin dashboard header will be used to authorize with firebase/firestore and update our firestore context. Our admin dashboard header also contains the Signout method to handle the Signout process.
 
-[Layout Component](src/components/layout/index.tsx)
+[layout.tsx](src/components/layout/index.tsx)
 
 ```jsx
 const { fsState, setFsState } = useContext(FirestoreContext);
@@ -692,10 +692,10 @@ function handleSignOut() {
 
 Now that we're authenticated and have access to our dashboard, let's make a Todo component so that we can utilize firestore/firebase API methods to perform CRUD operations on our Firestore database.
 
-[TodoList](src/components/ui/TodoList/index.tsx)
+[TodoList.tsx](src/components/ui/TodoList/index.tsx)
 
 ```jsx
-  // src/components/ui/TodoList.ts
+  // src/components/ui/TodoList.tsx
 const TodoList = () => {
   const [filter, setFilter] = useState<string>('all');
 
@@ -754,7 +754,7 @@ const TodoList = () => {
 
 Now all we need to do is create the firebase/firestore api methods to handle our todos CRUD (*Create, Read, Update, Delete*) operations. Our **useTodos** will subscribe to Firestore *onSnapsot()* subscription perform real-time data updates to our Firestore database. In addition, we would need to add the subscription listener to our firestore context state so that we can unsubscribe the active listeners before logging out of the Firestore. Firestore will return a "permission-denied" error if we sign out but don't terminate the listeners.
 
-[useTodo](src/_utils/firebase-v9/firebase/firestore/useTodos.ts)
+[useTodos.ts](src/_utils/firebase-v9/firebase/firestore/useTodos.ts)
 
 ```jsx
 // src/_utils/firebase-v9/firebase/firestore/useTodos.ts
@@ -804,4 +804,4 @@ export default function useTodos() {
 
 ## Conclusion
 
-Our Next.js + NextAuth Authentication + Firebase + Firestore project app is now completed. Despite being a bit lengthy, it does cover every aspect related to Firebase/Firestore authentication and Firestore database updates. I hope the project app is beneficial and encourages you to try out Google Cloud services. I'll continue to make an more unique and fun apps in the future.
+Our Next.js & NextAuth & Firebase & Firestore project app is now completed. Despite being a bit lengthy, it does cover every aspect related to Firebase/Firestore authentication and Firestore database updates. I hope the project app is beneficial and encourages you to try out Google Cloud services. I'll continue to make an more unique and fun apps in the future.
