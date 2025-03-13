@@ -28,7 +28,6 @@ const ErrorsList = {
 type ErrorKeys = keyof typeof ErrorsList;
 
 interface SignInType {
-  csrfToken: string;
   providers: Record<string, any>;
 }
 
@@ -37,7 +36,7 @@ const defaultValues = {
   password: 'admin2022',
 };
 
-function Login({ csrfToken, providers }: SignInType) {
+function Login({ providers }: SignInType) {
   const [formError, formErrorSet] = useState<string | undefined>();
 
   const router = useRouter();
@@ -111,7 +110,7 @@ function Login({ csrfToken, providers }: SignInType) {
             <Typography variant="subtitle1" component="h2" sx={{ color: 'error.main', mb: '20px', display: 'flex', justifyContent: 'center' }}>
               {formError}
             </Typography>
-            <CredentialForm csrfToken={csrfToken} defaultValues={defaultValues} handleOnSubmit={handleOnSubmit} />
+            <CredentialForm defaultValues={defaultValues} handleOnSubmit={handleOnSubmit} />
           </Grid>
           <Grid xs={12} sm={12} md={12} item>
             <Provider providers={providers} onSignIn={handleSignInProvider} />
@@ -138,9 +137,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   // initiate csrfToken and provider list
-  const csrfToken = await getCsrfToken(context);
+  //const csrfToken = await getCsrfToken(context);
   const providers = await getProviders();
   return {
-    props: { csrfToken, providers },
+    props: { providers },
   };
 };

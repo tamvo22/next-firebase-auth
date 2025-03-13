@@ -22,7 +22,6 @@
     "strictNullChecks": true,
     "removeComments": false,
     "preserveConstEnums": true,
-    "suppressImplicitAnyIndexErrors": true,
     "allowSyntheticDefaultImports": true,
     "jsx": "preserve",
     "baseUrl": ".",

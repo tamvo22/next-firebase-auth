@@ -19,7 +19,7 @@ export const Form = styled('form')`
 `;
 
 interface CredentialFormProps {
-  csrfToken: string;
+  csrfToken?: string;
   defaultValues: Record<string, any>;
   handleOnSubmit: (event: React.FormEvent<HTMLFormElement>) => Promise<void>;
 }
@@ -32,7 +32,7 @@ export default function CredentialForm({ csrfToken, defaultValues, handleOnSubmi
           Credential Sign In
         </Typography>
         <Form onSubmit={handleOnSubmit} autoComplete="off">
-          <TextField sx={{ display: 'none' }} type="hidden" name="csrfToken" defaultValue={csrfToken} />
+          <TextField sx={{ display: 'none' }} type="hidden" />
           <InputLabel htmlFor="email">Email</InputLabel>
           <TextField type="email" variant="outlined" name="email" defaultValue={defaultValues.email} required fullWidth size="small" />
           <InputLabel htmlFor="password">Password</InputLabel>

@@ -1,16 +1,15 @@
 import { getApp, getApps, initializeApp } from 'firebase/app';
 
-const FirebaseProjectID = process.env.FIREBASE_PROJECT_ID;
+const FIREBASE_PROJECT_ID = process.env.FIREBASE_PROJECT_ID;
+const FIREBASE_API_KEY = process.env.FIREBASE_API_KEY;
+const FIREBASE_AUTH_DOMAIN = FIREBASE_PROJECT_ID + '.firebaseapp.com';
+const FIREBASE_STORAGE_BUCKET = FIREBASE_PROJECT_ID + '.firebasestorage.app';
 
-const FIREBASE_AUTH_DOMAIN = FirebaseProjectID + '.firebaseapp.com';
-const FIREBASE_DATABASE_URL = 'https://' + FirebaseProjectID + '.firebaseio.com';
-const FIREBASE_STORAGE_BUCKET = FirebaseProjectID + '.appspot.com';
-
+// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
+  apiKey: FIREBASE_API_KEY,
   authDomain: FIREBASE_AUTH_DOMAIN,
-  databaseURL: FIREBASE_DATABASE_URL,
-  projectId: FirebaseProjectID,
+  projectId: FIREBASE_PROJECT_ID,
   storageBucket: FIREBASE_STORAGE_BUCKET,
   appId: process.env.FIREBASE_APP_ID,
 };
